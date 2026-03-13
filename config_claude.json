@@ -1,0 +1,30 @@
+{
+  "api_key": "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",
+  
+  "claude_settings": {
+    "model": "claude-sonnet-4-20250514",
+    "api_url": "https://api.anthropic.com/v1/messages",
+    "api_version": "2023-06-01",
+    "max_tokens": 1024
+  },
+  
+  "settings": {
+    "max_questions": 30,
+    "start_delay_seconds": 5,
+    "screenshot_quality": 85,
+    "click_duration": 0.3,
+    "wait_between_questions": 1.5
+  },
+  
+  "positions": {
+    "answer_buttons": {
+      "offset_x": 220,
+      "offset_y": 80
+    },
+    "question_numbers": {
+      "right_panel_x_offset": 100,
+      "top_start": 150,
+      "button_height": 40
+    }
+  }
+}
