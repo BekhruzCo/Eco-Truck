@@ -1,4 +1,6 @@
 import os
+import json
+
 from pathlib import Path
 
 
@@ -16,6 +18,15 @@ def load_env_file(path: Path) -> None:
         key, value = line.split("=", 1)
         os.environ.setdefault(key.strip(), value.strip().strip("'\""))
 
+def load_json_file(path: Path) -> dict:
+    if not path.exists():
+        return {}
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
 
 def env_bool(name: str, default: bool = False) -> bool:
     return os.getenv(name, str(default)).strip().lower() in {"1", "true", "yes", "on"}
@@ -30,6 +41,8 @@ def env_int(name: str, default: int) -> int:
 
 load_env_file(BASE_DIR / ".env")
 load_env_file(BASE_DIR / "email.env")
+
+CLAUDE_CONFIG = load_json_file(BASE_DIR / "config_claude.json") or load_json_file(BASE_DIR.parent / "config_claude.json")
 
 SECRET_KEY = "django-insecure-ecotrack-local-dev-key"
 DEBUG = env_bool("DJANGO_DEBUG", True)
@@ -114,8 +127,12 @@ EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)
 EMAIL_USE_SSL = env_bool("EMAIL_USE_SSL", False)
 DEFAULT_FROM_EMAIL = os.getenv("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER or "noreply@ecotrack.local")
 
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "")
-GEMINI_VISION_MODEL = os.getenv("GEMINI_VISION_MODEL", "gemini-2.5-flash")
+CLAUDE_API_KEY = CLAUDE_CONFIG.get("api_key", "")
+CLAUDE_VISION_MODEL = CLAUDE_CONFIG.get("claude_settings", {}).get("model", "claude-sonnet-4-20250514")
+CLAUDE_API_URL = CLAUDE_CONFIG.get("claude_settings", {}).get("api_url", "https://api.anthropic.com/v1/messages")
+CLAUDE_API_VERSION = CLAUDE_CONFIG.get("claude_settings", {}).get("api_version", "2023-06-01")
+CLAUDE_MAX_TOKENS = CLAUDE_CONFIG.get("claude_settings", {}).get("max_tokens", 1024)
+
 
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/profile.html"

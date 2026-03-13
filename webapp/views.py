@@ -217,82 +217,66 @@ def logout_view(request: HttpRequest) -> HttpResponse:
     logout(request)
     return redirect("/")
 
-
 def _call_plant_doctor_ai(image) -> dict[str, object]:
-    if settings.GEMINI_API_KEY:
-        return _call_plant_doctor_gemini(image)
-    raise ValueError("GEMINI_API_KEY sozlanmagan.")
+    if settings.CLAUDE_API_KEY:
+        return _call_plant_doctor_claude(image)
+    raise ValueError("CLAUDE_API_KEY sozlanmagan.")
 
 
-def _call_plant_doctor_gemini(image) -> dict[str, object]:
+
+def _call_plant_doctor_claude(image) -> dict[str, object]:
     content_type = image.content_type or "image/jpeg"
     if content_type not in {"image/jpeg", "image/png", "image/webp", "image/gif"}:
         raise ValueError("Faqat JPG, PNG, WEBP yoki GIF rasm yuklang.")
 
     image_b64 = base64.b64encode(image.read()).decode("utf-8")
+    prompt = (
+    "Analyze this plant image and return ONLY valid JSON. "
+    "Do not use markdown. Do not add explanation outside JSON. "
+    "Use Uzbek language. "
+    "Schema: {"
+    '"plant": string, '
+    '"overview": string, '
+    '"disease": string, '
+    '"disease_present": boolean, '
+    '"confidence": string, '
+    '"urgency": string, '
+    '"treatment": string[], '
+    '"prevention": string[], '
+    '"note": string'
+    "}."
+)
+
+
     payload = {
-        "systemInstruction": {
-            "parts": [
-                {
-                    "text": (
-                        "You are a plant pathologist assistant. Analyze the plant image and return JSON only. "
-                        "Use Uzbek language. Identify the likely plant type, explain it briefly, determine whether "
-                        "disease is visible, name the most likely disease or say no clear disease is visible, and "
-                        "provide practical treatment and prevention advice. If uncertain, state uncertainty clearly."
-                    )
-                }
-            ]
-        },
-        "contents": [
+        "model": settings.CLAUDE_VISION_MODEL,
+        "max_tokens": settings.CLAUDE_MAX_TOKENS,
+        "messages": [
             {
-                "parts": [
-                    {"text": "Analyze this plant image and return the requested JSON."},
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": prompt},
                     {
-                        "inline_data": {
-                            "mime_type": content_type,
+                        "type": "image",
+                        "source": {
+                            "type": "base64",
+                            "media_type": content_type,
                             "data": image_b64,
-                        }
+                        },
                     },
-                ]
+                ],
             }
         ],
-        "generationConfig": {
-            "response_mime_type": "application/json",
-            "response_schema": {
-                "type": "OBJECT",
-                "properties": {
-                    "plant": {"type": "STRING"},
-                    "overview": {"type": "STRING"},
-                    "disease": {"type": "STRING"},
-                    "disease_present": {"type": "BOOLEAN"},
-                    "confidence": {"type": "STRING"},
-                    "urgency": {"type": "STRING"},
-                    "treatment": {"type": "ARRAY", "items": {"type": "STRING"}},
-                    "prevention": {"type": "ARRAY", "items": {"type": "STRING"}},
-                    "note": {"type": "STRING"},
-                },
-                "required": [
-                    "plant",
-                    "overview",
-                    "disease",
-                    "disease_present",
-                    "confidence",
-                    "urgency",
-                    "treatment",
-                    "prevention",
-                    "note",
-                ],
-            },
-        },
     }
 
     request = urllib_request.Request(
-        (
-            "https://generativelanguage.googleapis.com/v1beta/models/"
-            f"{settings.GEMINI_VISION_MODEL}:generateContent?key={settings.GEMINI_API_KEY}"
-        ),
+        settings.CLAUDE_API_URL,
         data=json.dumps(payload).encode("utf-8"),
-        headers={"Content-Type": "application/json"},
+        headers={
+            "Content-Type": "application/json",
+            "x-api-key": settings.CLAUDE_API_KEY,
+            "anthropic-version": settings.CLAUDE_API_VERSION,
+        },
         method="POST",
     )
 
@@ -301,24 +285,38 @@ def _call_plant_doctor_gemini(image) -> dict[str, object]:
             raw = json.loads(response.read().decode("utf-8"))
     except urllib_error.HTTPError as exc:
         details = exc.read().decode("utf-8", errors="ignore")
-        raise RuntimeError(details or f"Gemini API xatosi: {exc.code}") from exc
+        raise RuntimeError(details or f"Claude API xatosi: {exc.code}") from exc
     except urllib_error.URLError as exc:
-        raise RuntimeError("Gemini API bilan ulanishda xato yuz berdi.") from exc
-
+        raise RuntimeError("Claude API bilan ulanishda xato yuz berdi.") from exc
     text_parts = []
-    for candidate in raw.get("candidates", []):
-        for part in candidate.get("content", {}).get("parts", []):
-            if "text" in part:
-                text_parts.append(part["text"])
+    for item in raw.get("content", []):
+        if item.get("type") == "text":
+            text_parts.append(item.get("text", ""))
 
     output_text = "\n".join(text_parts).strip()
     if not output_text:
-        raise RuntimeError("Gemini javob qaytarmadi.")
+        raise RuntimeError("Claude javob qaytarmadi.")
+
+    if output_text.startswith("```json"):
+        output_text = output_text.replace("```json", "", 1).strip()
+    if output_text.startswith("```"):
+        output_text = output_text.replace("```", "", 1).strip()
+    if output_text.endswith("```"):
+        output_text = output_text[:-3].strip()
+
+    start = output_text.find("{")
+    end = output_text.rfind("}")
+    if start != -1 and end != -1 and end > start:
+        output_text = output_text[start:end + 1]
 
     try:
         return json.loads(output_text)
-    except json.JSONDecodeError as exc:
-        raise RuntimeError("Gemini javobini JSON ga aylantirib bo'lmadi.") from exc
+    except json.JSONDecodeError:
+        raise RuntimeError("Claude JSON formatda javob qaytarmadi: " + output_text[:300])
+
+
+
+    
 
 @csrf_exempt
 @require_POST
