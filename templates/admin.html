@@ -1,0 +1,106 @@
+{% load static %}
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoTrack - Admin</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body data-page="admin">
+    <div id="site-header"></div>
+
+    <main class="page-shell">
+      <section class="page-hero page-hero-rich container">
+        <div class="page-hero-copy">
+          <p class="eyebrow">Admin</p>
+          <h1>Hisobotlarni boshqarish</h1>
+          <p class="page-copy">
+            React table, dialog va filterlar oddiy DOM boshqaruvi bilan qayta yozildi.
+          </p>
+          <div class="page-badges">
+            <span>filterable table</span>
+            <span>quick actions</span>
+            <span>detail modal</span>
+          </div>
+        </div>
+        <aside class="page-side-card reveal">
+          <p class="impact-label">Nazorat markazi</p>
+          <h3>Hisobotlarni markazlashgan tarzda boshqaring</h3>
+          <div class="side-stat-list">
+            <div><strong>5</strong><span>demo report</span></div>
+            <div><strong>2</strong><span>jarayonda</span></div>
+            <div><strong>1</strong><span>tezkor export</span></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="container admin-top-grid">
+        <article class="glass-band reveal">
+          <strong>Moderatsiya</strong>
+          <p>Qidiruv, status va tur bo'yicha reportlarni tez ajratib ko'ring.</p>
+        </article>
+        <article class="glass-band reveal">
+          <strong>Decision flow</strong>
+          <p>Ko'rish va tasdiqlash amallari bevosita jadval ichidan boshqariladi.</p>
+        </article>
+      </section>
+
+      <section class="container section-stack">
+        <section class="card-grid card-grid-4" id="admin-stats"></section>
+
+        <section class="panel admin-filters admin-filters-premium">
+          <input type="search" id="admin-search" placeholder="Qidirish..." />
+          <select id="admin-status">
+            <option value="all">Barcha statuslar</option>
+            <option value="pending">Kutilmoqda</option>
+            <option value="in_progress">Jarayonda</option>
+            <option value="resolved">Hal qilindi</option>
+          </select>
+          <select id="admin-type">
+            <option value="all">Barcha turlar</option>
+            <option value="trash">Axlat</option>
+            <option value="water">Suv ifloslanishi</option>
+            <option value="tree">Daraxt kesish</option>
+          </select>
+          <button class="btn btn-secondary small" id="admin-export">Export</button>
+        </section>
+
+        <section class="panel admin-table-panel">
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Turi</th>
+                  <th>Joylashuv</th>
+                  <th>Yuboruvchi</th>
+                  <th>Sana</th>
+                  <th>Status</th>
+                  <th>Amallar</th>
+                </tr>
+              </thead>
+              <tbody id="admin-table-body"></tbody>
+            </table>
+          </div>
+          <p class="empty-state hidden" id="admin-empty">Hisobotlar topilmadi.</p>
+        </section>
+      </section>
+    </main>
+
+    <div class="modal hidden" id="admin-modal">
+      <div class="modal-backdrop" data-close-modal></div>
+      <div class="modal-card">
+        <button class="modal-close" type="button" data-close-modal>x</button>
+        <div id="admin-modal-content"></div>
+      </div>
+    </div>
+
+    <div id="site-footer"></div>
+    <div id="site-chat"></div>
+    <div id="toast-container"></div>
+
+    <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'js/admin.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,115 @@
+{% load static %}
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoTrack - Profil</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body data-page="profile">
+    <div id="site-header"></div>
+
+    <main class="page-shell">
+      <section class="page-hero page-hero-rich container">
+        <div class="page-hero-copy">
+          <p class="eyebrow">Profile</p>
+          <h1>Shaxsiy ekologik panel</h1>
+          <p class="page-copy">
+            Hisobingizga tegishli ma'lumotlar, yuborgan reportlar va ekologik faoliyatingiz
+            shu sahifada ko'rsatiladi.
+          </p>
+          <div class="page-badges">
+            <span id="profile-badge-method">email orqali</span>
+            <span id="profile-badge-email">account</span>
+            <span>activity insight</span>
+          </div>
+        </div>
+        <aside class="page-side-card reveal">
+          <p class="impact-label">Natija</p>
+          <h3>Foydalanuvchi ta'siri bir qarashda</h3>
+          <div class="side-stat-list">
+            <div><strong id="profile-side-points">0</strong><span>jami ball</span></div>
+            <div><strong id="profile-side-reports">0</strong><span>yuborilgan report</span></div>
+            <div><strong id="profile-side-rank">-</strong><span>global reyting</span></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="container section-stack">
+        <section class="panel profile-hero profile-hero-premium">
+          <div class="avatar-lg" id="profile-avatar">U</div>
+          <div class="profile-copy">
+            <h1 id="profile-name">Foydalanuvchi profili</h1>
+            <p id="profile-summary">Hisob ma'lumotlari yuklanmoqda.</p>
+            <div class="profile-meta-grid">
+              <div class="profile-meta-card">
+                <span>Email</span>
+                <strong id="profile-email">-</strong>
+              </div>
+              <div class="profile-meta-card">
+                <span>Username</span>
+                <strong id="profile-username">-</strong>
+              </div>
+              <div class="profile-meta-card">
+                <span>Telefon</span>
+                <strong id="profile-phone">-</strong>
+              </div>
+            </div>
+            <div class="progress-card">
+              <div class="progress-meta">
+                <span>Ekologik daraja</span>
+                <strong id="profile-level">1</strong>
+              </div>
+              <div class="progress-bar"><span id="profile-progress-bar" style="width: 0%"></span></div>
+              <small id="profile-progress-label">0% to Level 2</small>
+            </div>
+          </div>
+          <div class="profile-side-actions">
+            <a class="btn btn-secondary small hidden" href="./admin.html" id="profile-admin-link">Admin panel</a>
+            <a class="btn btn-primary small" href="/logout/">Chiqish</a>
+            <div class="profile-mini-card">
+              <strong id="profile-resolved">0 ta</strong>
+              <span>hal qilingan muammo</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="card-grid card-grid-3">
+          <article class="stat-card">
+            <p class="stat-value" id="profile-stat-reports">0</p>
+            <p class="stat-label">Jami xabarlar</p>
+          </article>
+          <article class="stat-card">
+            <p class="stat-value" id="profile-stat-resolved">0</p>
+            <p class="stat-label">Hal qilingan</p>
+          </article>
+          <article class="stat-card">
+            <p class="stat-value" id="profile-stat-rank">-</p>
+            <p class="stat-label">Reytingdagi o'rin</p>
+          </article>
+        </section>
+
+        <section class="panel chart-panel">
+          <div class="panel-header">
+            <h2>Faollik statistikasi</h2>
+            <span class="muted">So'nggi 6 oy</span>
+          </div>
+          <div id="profile-chart" class="chart-box"></div>
+        </section>
+
+        <section class="panel badge-panel">
+          <h2>Mukofot belgilar</h2>
+          <div class="badge-grid" id="badge-grid"></div>
+        </section>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <div id="site-chat"></div>
+    <div id="toast-container"></div>
+
+    <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'js/profile.js' %}"></script>
+  </body>
+</html>

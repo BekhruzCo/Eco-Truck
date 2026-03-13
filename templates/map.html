@@ -1,0 +1,134 @@
+{% load static %}
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoTrack - Xarita</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+  </head>
+  <body data-page="map">
+    <div id="site-header"></div>
+
+    <main class="page-shell">
+      <section class="page-hero page-hero-rich container">
+        <div class="page-hero-copy">
+          <p class="eyebrow">Xarita</p>
+          <h1>Chiqindi qutilari xaritasi</h1>
+          <p class="page-copy">
+            Foydalanuvchilar chiqindi qutilarining joylashuvini rasm, video va lokatsiya bilan kiritadi.
+            Keyin barcha foydalanuvchilar xaritada ularni ko'ra oladi.
+          </p>
+          <div class="page-badges">
+            <span>real geolokatsiya</span>
+            <span>rasm va video</span>
+            <span>hamjamiyat xaritasi</span>
+          </div>
+        </div>
+        <aside class="page-side-card reveal">
+          <p class="impact-label">Hamjamiyat</p>
+          <h3>Axlat qutisini topdingizmi?</h3>
+          <div class="side-stat-list">
+            <div><strong>1 tugma</strong><span>hozirgi joyni aniqlash uchun</span></div>
+            <div><strong>Rasm/video</strong><span>joyni tasdiqlash uchun</span></div>
+            <div><strong>Barcha userlar</strong><span>xaritadan ko'ra oladi</span></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="container map-page-layout">
+        <aside class="panel map-form-panel">
+          <div class="panel-header">
+            <div>
+              <p class="auth-kicker">Yangi nuqta</p>
+              <h2>Chiqindi qutisini qo'shish</h2>
+            </div>
+          </div>
+
+          <div class="auth-alert hidden" id="bin-map-error"></div>
+          <div class="auth-success hidden" id="bin-map-success"></div>
+
+          <form id="bin-location-form" class="section-stack" enctype="multipart/form-data">
+            <label class="auth-label">
+              <span>Nomi</span>
+              <input type="text" name="title" value="Chiqindi qutisi" />
+            </label>
+
+            <label class="auth-label">
+              <span>Izoh</span>
+              <textarea name="description" rows="4" placeholder="Masalan: maktab oldida, bekat yonida"></textarea>
+            </label>
+
+            <div class="map-location-box">
+              <button class="btn btn-secondary" type="button" id="detect-location-btn">Lokatsiyani aniqlash</button>
+              <div class="map-location-readout" id="location-readout">Lokatsiya hali olinmagan.</div>
+            </div>
+
+            <input type="hidden" name="latitude" id="bin-latitude" />
+            <input type="hidden" name="longitude" id="bin-longitude" />
+
+            <label class="upload-box plant-upload-box">
+              <strong>Rasm yuklash</strong>
+              <span class="muted">Chiqindi qutisining rasmini tanlang</span>
+              <input type="file" name="image" id="bin-image-input" accept="image/*" />
+            </label>
+
+            <div class="plant-image-preview hidden" id="bin-image-preview-wrap">
+              <img id="bin-image-preview" alt="Bin preview" />
+            </div>
+
+            <label class="upload-box plant-upload-box">
+              <strong>Video yuklash</strong>
+              <span class="muted">Ixtiyoriy: qisqa video qo'shishingiz mumkin</span>
+              <input type="file" name="video" accept="video/*" />
+            </label>
+
+            <button class="btn btn-primary" type="submit">Xaritaga qo'shish</button>
+          </form>
+        </aside>
+
+        <section class="panel map-canvas-panel">
+          <div class="panel-header">
+            <div>
+              <p class="auth-kicker">Ko'rinish</p>
+              <h2>Barcha chiqindi qutilari</h2>
+            </div>
+            <button class="btn btn-secondary small" type="button" id="recenter-location-btn">Mening joyim</button>
+          </div>
+          <div class="map-status-row">
+            <div class="map-status-card">
+              <span>Joriy joy</span>
+              <strong id="current-location-status">Aniqlanmoqda...</strong>
+            </div>
+            <div class="map-status-card">
+              <span>Chiqindi qutilari</span>
+              <strong>Zoom qiling, keyin yashil nuqtalar ko'rinadi</strong>
+            </div>
+          </div>
+          <div id="community-map" class="community-map"></div>
+          <div class="detail-card" id="map-selected-detail">
+            Xaritadagi belgini tanlang yoki yangi nuqta qo'shing.
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <div id="site-chat"></div>
+    <div id="toast-container"></div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'js/map.js' %}"></script>
+  </body>
+</html>

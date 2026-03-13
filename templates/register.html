@@ -1,0 +1,96 @@
+{% load static %}
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoTrack - Ro'yxatdan o'tish</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body data-page="auth-register">
+    <div id="site-header"></div>
+    <main class="page-shell">
+      <section class="container auth-layout">
+        <article class="auth-side auth-side-register">
+          <p class="eyebrow">EcoTrack Register</p>
+          <h1>Bir necha maydonni to'ldiring va emailingiz orqali tasdiqlang</h1>
+          <p class="page-copy">
+            To'liq ism, username, email va parolni kiriting. Ro'yxatdan o'tish tugmasini bossangiz,
+            kiritilgan email manzilga tasdiqlash kodi yuboriladi.
+          </p>
+          <div class="auth-points">
+            <div class="auth-point">
+              <strong>Bitta qulay forma</strong>
+              <span>Hamma ma'lumotni birdan kiritasiz va keyingi bosqichda faqat kodni tasdiqlaysiz.</span>
+            </div>
+            <div class="auth-point">
+              <strong>Email tasdiqlash</strong>
+              <span>To'g'ri kod kiritsangiz, hisob avtomatik yaratiladi va profilingiz ochiladi.</span>
+            </div>
+          </div>
+        </article>
+
+        <section class="panel auth-card register-flow" id="register-flow">
+          <div class="auth-card-head">
+            <p class="auth-kicker">Ro'yxatdan o'tish</p>
+            <h2>Yangi hisob yarating</h2>
+            <p class="muted">Barcha ma'lumotlarni kiriting, keyin email kodingizni tasdiqlang.</p>
+          </div>
+
+          <div class="auth-alert hidden" id="register-error"></div>
+          <div class="auth-success hidden" id="register-success"></div>
+
+          <div class="register-stage" data-step="form">
+            <label class="auth-label">
+              <span>To'liq ism</span>
+              <input type="text" id="register-full-name" />
+            </label>
+            <label class="auth-label">
+              <span>Username</span>
+              <input type="text" id="register-username" />
+            </label>
+            <label class="auth-label">
+              <span>Email</span>
+              <input type="email" id="register-email" />
+            </label>
+            <label class="auth-label">
+              <span>Telefon raqam (ixtiyoriy)</span>
+              <input type="tel" id="register-phone" placeholder="+998 90 123 45 67" />
+            </label>
+            <label class="auth-label">
+              <span>Parol</span>
+              <input type="password" id="register-password" />
+            </label>
+            <label class="auth-label">
+              <span>Parolni tasdiqlang</span>
+              <input type="password" id="register-password-confirm" />
+            </label>
+            <div class="register-actions">
+              <button class="btn btn-primary" type="button" id="register-submit">Ro'yxatdan o'tish</button>
+            </div>
+          </div>
+
+          <div class="register-stage hidden" data-step="verify">
+            <p class="muted">Kiritgan email manzilingizga yuborilgan 6 xonali kodni kiriting.</p>
+            <label class="auth-label">
+              <span>Tasdiqlash kodi</span>
+              <input type="text" id="register-code" maxlength="6" />
+            </label>
+            <div class="register-actions">
+              <button class="btn btn-secondary" type="button" data-back="form">Orqaga</button>
+              <button class="btn btn-primary" type="button" id="register-verify-submit">Kodni tasdiqlash</button>
+            </div>
+          </div>
+
+          <div class="auth-divider"><span>allaqachon hisobingiz bormi?</span></div>
+          <a class="btn btn-secondary wide" href="/login/">Kirish</a>
+        </section>
+      </section>
+    </main>
+    <div id="site-footer"></div>
+    <div id="site-chat"></div>
+    <div id="toast-container"></div>
+    <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'js/register.js' %}"></script>
+  </body>
+</html>

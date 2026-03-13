@@ -1,0 +1,69 @@
+{% load static %}
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoTrack - Kirish</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body data-page="auth">
+    <div id="site-header"></div>
+    <main class="page-shell">
+      <section class="container auth-layout">
+        <article class="auth-side auth-side-login">
+          <p class="eyebrow">EcoTrack Login</p>
+          <h1>Platformaga kirib, kuzatuvni davom ettiring</h1>
+          <p class="page-copy">
+            Hisobotlarni boshqarish, profilingizni ko'rish va ekologik harakatlaringizni
+            bitta joyda davom ettirish uchun tizimga kiring.
+          </p>
+          <div class="auth-points">
+            <div class="auth-point">
+              <strong>Qulay boshqaruv</strong>
+              <span>Tracker, report va admin panel bir tizimda ishlaydi.</span>
+            </div>
+            <div class="auth-point">
+              <strong>Email orqali kirish</strong>
+              <span>Ro'yxatdan o'tishda kiritgan email va parol bilan tizimga kirasiz.</span>
+            </div>
+          </div>
+        </article>
+
+        <form method="post" class="panel auth-card">
+          {% csrf_token %}
+          <div class="auth-card-head">
+            <p class="auth-kicker">Kirish</p>
+            <h2>Hisobingizga kiring</h2>
+            <p class="muted">Davom etish uchun email va parolingizni kiriting.</p>
+          </div>
+
+          {% if form.non_field_errors %}
+            <div class="auth-alert">{{ form.non_field_errors|join:", " }}</div>
+          {% endif %}
+
+          <input type="hidden" name="next" value="{{ next }}" />
+
+          <label class="auth-label">
+            <span>Email</span>
+            {{ form.username }}
+          </label>
+          <label class="auth-label">
+            <span>Password</span>
+            {{ form.password }}
+          </label>
+
+          <button class="btn btn-primary wide" type="submit">Kirish</button>
+
+          <div class="auth-divider"><span>yoki</span></div>
+
+          <a class="btn btn-secondary wide" href="/register/">Ro'yxatdan o'tish</a>
+        </form>
+      </section>
+    </main>
+    <div id="site-footer"></div>
+    <div id="site-chat"></div>
+    <div id="toast-container"></div>
+    <script src="{% static 'js/app.js' %}"></script>
+  </body>
+</html>

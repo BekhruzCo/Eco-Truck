@@ -1,0 +1,71 @@
+{% load static %}
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoTrack - O'rganish</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body data-page="learn">
+    <div id="site-header"></div>
+
+    <main class="page-shell">
+      <section class="page-hero page-hero-rich container">
+        <div class="page-hero-copy">
+          <p class="eyebrow">Learn</p>
+          <h1>O'rganish markazi</h1>
+          <p class="page-copy">
+            Top eko-faollar, video kartalar, mini test va kundalik maslahatlar
+            oddiy statik front-end ko'rinishida qayta yig'ildi.
+          </p>
+          <div class="page-badges">
+            <span>eco knowledge</span>
+            <span>video cards</span>
+            <span>mini quiz</span>
+          </div>
+        </div>
+        <aside class="page-side-card reveal">
+          <p class="impact-label">Ta'lim oqimi</p>
+          <h3>Bilimni amaliy harakatga aylantiring</h3>
+          <div class="side-stat-list">
+            <div><strong>5+</strong><span>foydali maslahatlar</span></div>
+            <div><strong>3</strong><span>mini video blok</span></div>
+            <div><strong>1</strong><span>tezkor ekologik test</span></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="container learn-layout">
+        <section class="panel learn-main">
+          <div class="panel-header">
+            <h2>Top Eko-Faollar</h2>
+            <button class="btn btn-secondary small" id="shuffle-leaders">Yangilash</button>
+          </div>
+          <div class="leaderboard" id="leaderboard"></div>
+        </section>
+
+        <section class="card-grid card-grid-3" id="video-grid"></section>
+
+        <section class="panel quiz-card quiz-card-premium">
+          <h2>Ekologik test</h2>
+          <p>3 ta savol bilan bilimlaringizni tekshirib ko'ring.</p>
+          <button class="btn btn-primary" id="start-quiz">Testni boshlash</button>
+          <div class="quiz-box hidden" id="quiz-box"></div>
+        </section>
+
+        <section class="panel learn-tips">
+          <h2>Kundalik maslahatlar</h2>
+          <div class="tips-list" id="tips-list"></div>
+        </section>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <div id="site-chat"></div>
+    <div id="toast-container"></div>
+
+    <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'js/learn.js' %}"></script>
+  </body>
+</html>

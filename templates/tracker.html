@@ -1,0 +1,84 @@
+{% load static %}
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoTrack - Kuzatish</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body data-page="tracker">
+    <div id="site-header"></div>
+
+    <main class="page-shell">
+      <section class="page-hero page-hero-rich container">
+        <div class="page-hero-copy">
+          <p class="eyebrow">Tracker</p>
+          <h1>Ekologik nuqtalarni kuzating</h1>
+          <p class="page-copy">
+            React'dagi Mapbox sahifasi o'rniga oddiy HTML, CSS va JS bilan ishlaydigan
+            interaktiv kuzatuv paneli tayyorlandi.
+          </p>
+          <div class="page-badges">
+            <span>real vaqt kuzatuvi</span>
+            <span>hudud bo'yicha saralash</span>
+            <span>tezkor ko'rish</span>
+          </div>
+        </div>
+        <aside class="page-side-card reveal">
+          <p class="impact-label">Monitoring</p>
+          <h3>Bugungi faol zonalar</h3>
+          <div class="side-stat-list">
+            <div><strong>14</strong><span>faol nuqta</span></div>
+            <div><strong>6</strong><span>tekshiruvda</span></div>
+            <div><strong>21</strong><span>yakunlangan ish</span></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="container tracker-summary">
+        <article class="glass-band reveal">
+          <strong>Xarita paneli</strong>
+          <p>Filtrni tanlang va nuqtani bosib, muammo tafsilotlarini ko'ring.</p>
+        </article>
+        <article class="glass-band reveal">
+          <strong>Hududiy nazorat</strong>
+          <p>Chiqindi, suv va daraxt bilan bog'liq holatlar alohida rangda ajratilgan.</p>
+        </article>
+        <article class="glass-band reveal">
+          <strong>Operativ ko'rinish</strong>
+          <p>Pastdagi detail blok tanlangan nuqtaning holatini ko'rsatadi.</p>
+        </article>
+      </section>
+
+      <section class="container tracker-layout">
+        <aside class="panel tracker-sidebar">
+          <h2>Filtrlar</h2>
+          <div class="filter-group" id="tracker-filters">
+            <button class="chip active" data-filter="all">Hammasi</button>
+            <button class="chip" data-filter="trash">Chiqindi</button>
+            <button class="chip" data-filter="water">Suv</button>
+            <button class="chip" data-filter="tree">Daraxt</button>
+          </div>
+          <div class="tracker-list" id="tracker-list"></div>
+        </aside>
+
+        <section class="panel tracker-stage">
+          <div class="tracker-map" id="tracker-map">
+            <div class="map-grid"></div>
+          </div>
+          <div class="detail-card" id="tracker-detail">
+            Nuqtani tanlang.
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <div id="site-chat"></div>
+    <div id="toast-container"></div>
+
+    <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'js/tracker.js' %}"></script>
+  </body>
+</html>

@@ -1,0 +1,157 @@
+{% load static %}
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoTrack - Tabiatni kuzat, himoya qil, foyda keltir!</title>
+    <meta
+      name="description"
+      content="EcoTrack - atrof-muhitni himoya qiluvchi platforma. Chiqindi joylarini kuzating, xabar bering va ekologik o'zgarishlarga hissa qo'shing."
+    />
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body data-page="home">
+    <div id="site-header"></div>
+
+    <main>
+      <section class="hero">
+        <div class="hero-media" style="background-image: url('{% static 'assets/hero-bg.jpg' %}')"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-noise"></div>
+        <div class="container hero-shell">
+          <div class="hero-copy">
+            <span class="hero-badge" data-i18n="home.tagline"></span>
+            <h1>
+              <span data-i18n="home.hero"></span>
+              <span class="hero-accent" data-i18n="home.heroAction"></span>
+            </h1>
+            <p class="hero-text" data-i18n="home.subtitle"></p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="./tracker.html" data-i18n="home.startTracking"></a>
+              <a class="btn btn-secondary" href="./learn.html" data-i18n="home.learn"></a>
+            </div>
+            <div class="hero-mini-stats">
+              <div>
+                <strong>128+</strong>
+                <span>hudud nazoratda</span>
+              </div>
+              <div>
+                <strong>24/7</strong>
+                <span>jamoaviy monitoring</span>
+              </div>
+              <div>
+                <strong>92%</strong>
+                <span>tezkor javob</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-panel reveal">
+            <div class="panel-kicker">Live impact</div>
+            <h3>Bugungi ekologik harakatlar</h3>
+            <div class="hero-panel-list">
+              <article class="hero-panel-item">
+                <span class="hero-dot green"></span>
+                <div>
+                  <strong>Chilonzor</strong>
+                  <p>Yangi chiqindi nuqtasi xaritaga qo'shildi</p>
+                </div>
+              </article>
+              <article class="hero-panel-item">
+                <span class="hero-dot amber"></span>
+                <div>
+                  <strong>Yunusobod</strong>
+                  <p>Ko'ngillilar guruhi tozalash ishini boshladi</p>
+                </div>
+              </article>
+              <article class="hero-panel-item">
+                <span class="hero-dot blue"></span>
+                <div>
+                  <strong>Samarqand</strong>
+                  <p>Suv ifloslanishi bo'yicha xabar tekshiruvda</p>
+                </div>
+              </article>
+            </div>
+            <a class="panel-link" href="./admin.html">Batafsil ko'rish</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats-strip container">
+        <article class="stat-card reveal">
+          <p class="stat-value">324 kg</p>
+          <p class="stat-label" data-i18n="stats.wasteCollected"></p>
+        </article>
+        <article class="stat-card reveal">
+          <p class="stat-value">1,234</p>
+          <p class="stat-label" data-i18n="stats.activeUsers"></p>
+        </article>
+        <article class="stat-card reveal">
+          <p class="stat-value">+48%</p>
+          <p class="stat-label" data-i18n="stats.growth"></p>
+        </article>
+      </section>
+
+      <section class="section container">
+        <div class="section-heading reveal">
+          <h2 data-i18n="features.howItWorks"></h2>
+          <p data-i18n="features.subtitle"></p>
+        </div>
+        <div class="card-grid card-grid-3">
+          <article class="feature-card reveal">
+            <div class="feature-icon">01</div>
+            <div class="feature-line"></div>
+            <h3 data-i18n="features.track"></h3>
+            <p data-i18n="features.trackDesc"></p>
+          </article>
+          <article class="feature-card reveal">
+            <div class="feature-icon">02</div>
+            <div class="feature-line"></div>
+            <h3 data-i18n="features.report"></h3>
+            <p data-i18n="features.reportDesc"></p>
+          </article>
+          <article class="feature-card reveal">
+            <div class="feature-icon">03</div>
+            <div class="feature-line"></div>
+            <h3 data-i18n="features.reward"></h3>
+            <p data-i18n="features.rewardDesc"></p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section container impact-grid">
+        <article class="impact-card reveal">
+          <p class="impact-label">Ustuvor yo'nalish</p>
+          <h3>Mahalliy kuzatuvni tezlashtirish</h3>
+          <p>
+            Har bir yuborilgan xabar hududiy nazorat paneliga tushadi va
+            ekologik muammo joylashuvi bo'yicha saralanadi.
+          </p>
+        </article>
+        <article class="impact-card impact-card-accent reveal">
+          <p class="impact-label">Jamoa natijasi</p>
+          <h3>Bir platformada kuzatish, xabar berish va o'rganish</h3>
+          <p>
+            EcoTrack foydalanuvchini oddiy kuzatuvchidan faol ekologik hamkor
+            darajasiga olib chiqadi.
+          </p>
+        </article>
+      </section>
+
+      <section class="section container">
+        <div class="cta-card reveal">
+          <h2 data-i18n="cta.title"></h2>
+          <p data-i18n="cta.desc"></p>
+          <a class="btn btn-light" href="./report.html" data-i18n="cta.button"></a>
+        </div>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <div id="site-chat"></div>
+    <div id="toast-container"></div>
+
+    <script src="{% static 'js/app.js' %}"></script>
+  </body>
+</html>

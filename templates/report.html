@@ -1,0 +1,93 @@
+{% load static %}
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoTrack - Xabar berish</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body data-page="report">
+    <div id="site-header"></div>
+
+    <main class="page-shell">
+      <section class="page-hero page-hero-rich container">
+        <div class="page-hero-copy">
+          <p class="eyebrow">Report</p>
+          <h1>Iflos hudud haqida xabar bering</h1>
+          <p class="page-copy">
+            Formadagi ma'lumotlar front-end darajasida qabul qilinadi, geolokatsiya
+            va muvaffaqiyat xabari ham oddiy JavaScript bilan ishlaydi.
+          </p>
+          <div class="page-badges">
+            <span>1 daqiqalik forma</span>
+            <span>rasm yuklash</span>
+            <span>geo-aniqlash</span>
+          </div>
+        </div>
+        <aside class="page-side-card reveal">
+          <p class="impact-label">Yuborish oqimi</p>
+          <h3>Toza va tez report tizimi</h3>
+          <div class="side-stat-list">
+            <div><strong>01</strong><span>muammo turini tanlang</span></div>
+            <div><strong>02</strong><span>joylashuv va tavsif kiriting</span></div>
+            <div><strong>03</strong><span>rasmni biriktirib yuboring</span></div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="container report-top-grid">
+        <article class="glass-band reveal">
+          <strong>Yuqori aniqlik</strong>
+          <p>Joylashuvni avtomatik aniqlash imkoniyati report sifatini oshiradi.</p>
+        </article>
+        <article class="glass-band reveal">
+          <strong>Haqiqiy foyda</strong>
+          <p>Har bir yuborilgan xabar monitoring va tozalash jarayoniga ulanadi.</p>
+        </article>
+      </section>
+
+      <section class="container form-wrap">
+        <form class="panel report-form report-form-premium" id="report-form">
+          <div class="type-grid">
+            <button type="button" class="type-option active" data-type="trash">Chiqindi</button>
+            <button type="button" class="type-option" data-type="water">Suv iflosligi</button>
+            <button type="button" class="type-option" data-type="tree">Daraxt kesilishi</button>
+          </div>
+
+          <label>
+            <span>Joylashuv</span>
+            <div class="input-row">
+              <input type="text" id="report-location" placeholder="Joylashuvni kiriting" required />
+              <button type="button" class="btn btn-secondary small" id="detect-location">Aniqlash</button>
+            </div>
+          </label>
+
+          <label>
+            <span>Tavsif</span>
+            <textarea id="report-description" rows="5" placeholder="Muammo haqida batafsil yozing..." required></textarea>
+          </label>
+
+          <label class="upload-box" for="report-image">
+            <input type="file" id="report-image" accept="image/*" />
+            <strong>Rasm yuklash</strong>
+            <span id="report-image-name">Rasm yuklash uchun bosing</span>
+          </label>
+
+          <input type="hidden" id="report-type" value="trash" />
+          <button type="submit" class="btn btn-primary wide" id="report-submit">Xabar yuborish</button>
+          <div class="success-box hidden" id="report-success">
+            Xabar yuborildi. Rahmat, siz tabiatni asrashga hissa qo'shdingiz.
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <div id="site-chat"></div>
+    <div id="toast-container"></div>
+
+    <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'js/report.js' %}"></script>
+  </body>
+</html>

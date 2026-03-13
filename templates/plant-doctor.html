@@ -1,0 +1,134 @@
+{% load static %}
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoTrack - Plant Doctor</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+  </head>
+  <body data-page="plant-doctor">
+    <div id="site-header"></div>
+
+    <main class="page-shell">
+      <section class="container page-hero-rich plant-doctor-hero">
+        <div class="page-hero-copy">
+          <p class="eyebrow">Plant Doctor</p>
+          <h1>O'simlik va daraxt kasalliklarini tez tahlil qiling</h1>
+          <p class="page-copy">
+            Faqat bitta rasm yuklang. AI o'zi o'simlik turini aniqlashga harakat qiladi,
+            kasallik bor-yo'qligini tekshiradi va davolash hamda oldini olish bo'yicha tavsiya beradi.
+          </p>
+          <div class="page-badges">
+            <span>Rasm yuklash</span>
+            <span>Turini aniqlash</span>
+            <span>Davolash tavsiyasi</span>
+          </div>
+        </div>
+
+        <aside class="page-side-card">
+          <h3>Qanday foyda beradi?</h3>
+          <div class="side-stat-list">
+            <div>
+              <strong>Tez tahlil</strong>
+              <span>Uy bog'idagi kasallangan daraxt uchun birinchi yo'nalishni olasiz.</span>
+            </div>
+            <div>
+              <strong>Oddiy til</strong>
+              <span>Murakkab agronomik terminlarsiz, tushunarli tavsiya qaytaradi.</span>
+            </div>
+            <div>
+              <strong>AI uchun tayyor</strong>
+              <span>Hozirgi oqim aynan vision AI tahliliga moslab qurildi.</span>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="container plant-doctor-layout">
+        <section class="panel plant-doctor-form-panel">
+          <div class="panel-header">
+            <div>
+              <p class="auth-kicker">Tahlil formasi</p>
+              <h2>Faqat rasmni yuboring</h2>
+            </div>
+          </div>
+
+          <div class="auth-alert hidden" id="plant-doctor-error"></div>
+          <div class="auth-success hidden" id="plant-doctor-success"></div>
+
+          <form id="plant-doctor-form" class="section-stack" enctype="multipart/form-data">
+            <label class="upload-box plant-upload-box">
+              <strong>Rasm yuklash</strong>
+              <span class="muted">Kasallangan o'simlik yoki daraxtning yaqinroq rasmini tanlang</span>
+              <input type="file" name="image" id="plant-image-input" accept="image/*" />
+            </label>
+
+            <div class="plant-image-preview hidden" id="plant-image-preview-wrap">
+              <img id="plant-image-preview" alt="Plant preview" />
+            </div>
+
+            <button class="btn btn-primary" type="submit">Tahlil qilish</button>
+          </form>
+        </section>
+
+        <section class="panel plant-doctor-result-panel" id="plant-doctor-result">
+          <div class="panel-header">
+            <div>
+              <p class="auth-kicker">Natija</p>
+              <h2>Tahlil natijasi shu yerda chiqadi</h2>
+            </div>
+          </div>
+          <div class="empty-state" id="plant-doctor-empty">
+            Bitta rasm yuboring. Natijada AI o'simlik turi, kasallik holati va davolash yo'llarini chiqaradi.
+          </div>
+          <div class="section-stack hidden" id="plant-doctor-result-body">
+            <div class="glass-band">
+              <strong id="analysis-plant-name"></strong>
+              <p id="analysis-overview"></p>
+            </div>
+            <div class="doctor-summary-grid">
+              <article class="doctor-summary-card">
+                <span>Kasallik</span>
+                <strong id="analysis-disease"></strong>
+              </article>
+              <article class="doctor-summary-card">
+                <span>Kasallik mavjudmi</span>
+                <strong id="analysis-present"></strong>
+              </article>
+              <article class="doctor-summary-card">
+                <span>Ishonchlilik</span>
+                <strong id="analysis-confidence"></strong>
+              </article>
+              <article class="doctor-summary-card">
+                <span>Holat</span>
+                <strong id="analysis-urgency"></strong>
+              </article>
+            </div>
+            <div class="doctor-columns">
+              <article class="doctor-detail-card">
+                <h3>Davolash usullari</h3>
+                <ul id="analysis-treatment"></ul>
+              </article>
+              <article class="doctor-detail-card">
+                <h3>Oldini olish</h3>
+                <ul id="analysis-prevention"></ul>
+              </article>
+            </div>
+            <div class="glass-band">
+              <strong>Izoh</strong>
+              <p id="analysis-note"></p>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <div id="site-footer"></div>
+    <div id="site-chat"></div>
+    <div id="toast-container"></div>
+
+    <script src="{% static 'js/app.js' %}"></script>
+    <script src="{% static 'js/plant-doctor.js' %}"></script>
+  </body>
+</html>
