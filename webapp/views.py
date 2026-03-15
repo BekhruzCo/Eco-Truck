@@ -142,6 +142,14 @@ def auth_status(request: HttpRequest) -> JsonResponse:
     if not request.user.is_authenticated:
         return JsonResponse({"authenticated": False})
 
+    profile = getattr(request.user, "profile", None)
+    remaining_ai_uses = None
+    daily_ai_limit = None
+
+    if profile and not request.user.is_superuser:
+        remaining_ai_uses = profile.remaining_ai_uses()
+        daily_ai_limit = profile.daily_ai_limit
+
     return JsonResponse(
         {
             "authenticated": True,
@@ -149,6 +157,9 @@ def auth_status(request: HttpRequest) -> JsonResponse:
             "email": request.user.email,
             "username": request.user.username,
             "is_staff": request.user.is_staff,
+            "is_superuser": request.user.is_superuser,
+            "daily_ai_limit": daily_ai_limit,
+            "remaining_ai_uses": remaining_ai_uses,
         }
     )
 
@@ -384,8 +395,20 @@ def start_registration(request: HttpRequest) -> JsonResponse:
 @csrf_exempt
 @require_POST
 def analyze_plant(request: HttpRequest) -> JsonResponse:
-    image = request.FILES.get("image")
+    if not request.user.is_authenticated:
+        return _bad_request("AI dan foydalanish uchun avval kirishni amalga oshiring.", 401)
 
+    profile, _ = UserProfile.objects.get_or_create(
+        user=request.user,
+        defaults={
+            "registration_method": "email",
+        },
+    )
+
+    if not request.user.is_superuser and not profile.can_use_ai():
+        return _bad_request("Sizning bugingi AI dan foydalanish limitingiz tugadi.", 429)
+
+    image = request.FILES.get("image")
     if not image:
         return _bad_request("Rasm yuklang.")
 
@@ -396,7 +419,21 @@ def analyze_plant(request: HttpRequest) -> JsonResponse:
     except RuntimeError as exc:
         return _bad_request(str(exc), 500)
 
+    if not request.user.is_superuser:
+        profile.consume_ai_use()
+        remaining_ai_uses = profile.remaining_ai_uses()
+        daily_ai_limit = profile.daily_ai_limit
+    else:
+        remaining_ai_uses = None
+        daily_ai_limit = None
+
+    analysis["remaining_ai_uses"] = remaining_ai_uses
+    analysis["daily_ai_limit"] = daily_ai_limit
+    analysis["is_superuser"] = request.user.is_superuser
+
     return JsonResponse(analysis)
+
+
 
 
 @csrf_exempt

@@ -1,16 +1,16 @@
 {% load static %}
 <!doctype html>
 <html lang="uz">
-  <script>
-  if (window.location.search.includes("app=1")) {
-    document.documentElement.classList.add("webview-app");
-  }
-</script>
+
 
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-
+  <script>
+  if (window.location.search.includes("app=1")) {
+    document.documentElement.classList.add("webview-app");
+  }
+ </script>
     <title>EcoTrack - Plant Doctor</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}" />
   </head>
@@ -63,6 +63,8 @@
 
           <div class="auth-alert hidden" id="plant-doctor-error"></div>
           <div class="auth-success hidden" id="plant-doctor-success"></div>
+          <p id="plant-doctor-limit" class="muted"></p>
+
 
           <form id="plant-doctor-form" class="section-stack" enctype="multipart/form-data">
             <label class="upload-box plant-upload-box">

@@ -16,8 +16,37 @@ class UserProfile(models.Model):
     registration_method = models.CharField(max_length=16, choices=REGISTRATION_METHODS)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    daily_ai_limit = models.PositiveIntegerField(default=5)
+    ai_used_today = models.PositiveIntegerField(default=0)
+    ai_limit_date = models.DateField(null=True, blank=True)
+
     def __str__(self) -> str:
         return self.user.username
+
+    def refresh_ai_limit_if_needed(self) -> None:
+        today = timezone.localdate()
+        if self.ai_limit_date != today:
+            self.ai_limit_date = today
+            self.ai_used_today = 0
+            self.save(update_fields=["ai_limit_date", "ai_used_today"])
+
+    def remaining_ai_uses(self):
+        if self.user.is_superuser:
+            return None
+        self.refresh_ai_limit_if_needed()
+        return max(self.daily_ai_limit - self.ai_used_today, 0)
+
+    def can_use_ai(self) -> bool:
+        if self.user.is_superuser:
+            return True
+        return self.remaining_ai_uses() > 0
+
+    def consume_ai_use(self) -> None:
+        if self.user.is_superuser:
+            return
+        self.refresh_ai_limit_if_needed()
+        self.ai_used_today += 1
+        self.save(update_fields=["ai_used_today"])
 
 
 class RegistrationRequest(models.Model):
