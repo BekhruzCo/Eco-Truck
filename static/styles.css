@@ -35,9 +35,17 @@ body[data-theme="dark"] {
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.5;
   background:
@@ -47,6 +55,7 @@ body {
     linear-gradient(180deg, #edf5db, var(--bg) 44%, #d4e6c2);
   color: var(--text);
 }
+
 body::before {
   content: "";
   position: fixed;
@@ -75,10 +84,12 @@ img { max-width: 100%; display: block; }
   top: 0;
   z-index: 30;
   backdrop-filter: blur(20px);
-  background: rgba(223, 237, 204, 0.92);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(223, 237, 204, 0.96);
   border-bottom: 1px solid var(--line);
   box-shadow: 0 6px 18px rgba(92, 148, 113, 0.04);
 }
+
 body[data-theme="dark"] .site-header { background: rgba(18, 23, 20, 0.76); }
 
 .nav-bar, .footer-grid, .section-heading, .panel-header, .profile-hero, .hero-actions,
@@ -207,6 +218,7 @@ body[data-theme="dark"] .site-header { background: rgba(18, 23, 20, 0.76); }
   place-items: center;
   overflow: hidden;
 }
+
 .hero-media, .hero-overlay { position: absolute; inset: 0; }
 .hero-media {
   background-size: cover;
@@ -1526,4 +1538,138 @@ body[data-theme="dark"] .quiz-card-premium {
   .profile-meta-grid { grid-template-columns: 1fr; }
   .leader-item > :last-child { grid-column: 1 / -1; }
   .modal-meta { grid-template-columns: 1fr; }
+}
+
+.webview-app .site-header {
+  position: relative;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: rgba(223, 237, 204, 0.98);
+}
+
+.webview-app .hero {
+  min-height: auto;
+}
+
+.webview-app .hero-shell,
+.webview-app .page-hero-rich,
+.webview-app .impact-grid,
+.webview-app .auth-layout,
+.webview-app .plant-doctor-layout,
+.webview-app .map-page-layout,
+.webview-app .tracker-summary,
+.webview-app .report-top-grid,
+.webview-app .admin-top-grid,
+.webview-app .doctor-summary-grid,
+.webview-app .doctor-columns {
+  grid-template-columns: 1fr !important;
+  gap: 16px;
+}
+
+.webview-app .hero-media {
+  transform: none;
+  filter: none;
+}
+
+.webview-app .hero-overlay {
+  background:
+    linear-gradient(180deg, rgba(18, 30, 20, 0.34), rgba(18, 30, 20, 0.56)),
+    radial-gradient(circle at top left, rgba(164, 214, 94, 0.14), transparent 28%);
+}
+
+.webview-app .hero h1,
+.webview-app .page-hero h1,
+.webview-app .hero-text,
+.webview-app .hero-badge,
+.webview-app .hero-accent,
+.webview-app .panel-kicker,
+.webview-app .hero-panel,
+.webview-app .hero-panel h3,
+.webview-app .hero-panel p,
+.webview-app .hero-mini-stats strong,
+.webview-app .hero-mini-stats span,
+.webview-app .nav-link,
+.webview-app .brand-text,
+.webview-app .btn,
+.webview-app .btn-primary,
+.webview-app .btn-secondary,
+.webview-app .btn-light {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.webview-app .hero-panel,
+.webview-app .hero-mini-stats div,
+.webview-app .stat-card,
+.webview-app .feature-card,
+.webview-app .panel,
+.webview-app .cta-card,
+.webview-app .footer-shell,
+.webview-app .chat-window,
+.webview-app .modal-card,
+.webview-app .video-card,
+.webview-app .auth-card,
+.webview-app .auth-side,
+.webview-app .page-side-card,
+.webview-app .glass-band,
+.webview-app .impact-card {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.webview-app .hero-panel {
+  background: rgba(34, 49, 21, 0.88) !important;
+  color: #fff !important;
+}
+
+.webview-app .hero-mini-stats div,
+.webview-app .stat-card,
+.webview-app .feature-card,
+.webview-app .panel,
+.webview-app .footer-shell,
+.webview-app .chat-window,
+.webview-app .modal-card,
+.webview-app .video-card,
+.webview-app .auth-card,
+.webview-app .auth-side,
+.webview-app .page-side-card,
+.webview-app .glass-band,
+.webview-app .impact-card {
+  background: rgba(255, 255, 255, 0.92) !important;
+}
+
+.webview-app .btn-primary {
+  background: #9fd64f !important;
+  color: #1d3127 !important;
+}
+
+.webview-app .btn-secondary,
+.webview-app .btn-light {
+  background: #ffffff !important;
+  color: #1d3127 !important;
+}
+
+.webview-app .chat-toggle,
+.webview-app .chat-window {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .webview-app .hero-actions,
+  .webview-app .auth-actions,
+  .webview-app .register-actions,
+  .webview-app .input-row,
+  .webview-app .admin-filters {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  .webview-app .btn {
+    width: 100%;
+    min-height: 50px;
+  }
+
+  .webview-app .hero-copy {
+    padding: 20px 0 10px;
+  }
 }

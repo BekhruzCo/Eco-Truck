@@ -1,9 +1,16 @@
 {% load static %}
 <!doctype html>
 <html lang="uz">
+  <script>
+  if (window.location.search.includes("app=1")) {
+    document.documentElement.classList.add("webview-app");
+  }
+</script>
+
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
     <title>EcoTrack - O'rganish</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}" />
   </head>
